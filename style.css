@@ -1,0 +1,118 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+.header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.header a {
+    color: inherit; /* Use the color inherited from the parent (.header) */
+    text-decoration: none; /* Remove underline */
+}
+
+.symbol-left,
+.symbol-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 80px;
+    height: 80px;
+    background-size: cover;
+}
+.symbol-left {
+    left: 10px;
+    background-image: url('symbol.png');
+    background-position: center;
+}
+.symbol-right {
+    right: 10px;
+    background-image: url('symbol.png');
+    background-position: center;
+}
+#pdfContainer {
+    width: 100%;
+    height: calc(200vh - 200px); /* Adjust height as needed */
+    overflow-y: auto;
+}
+canvas {
+    display: block;
+    margin: 0 auto;
+    width: 100%; /* Adjust width as needed */
+}
+.header2 {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 10px;
+}
+/* Remove the automatic Bootstrap numbers */
+.list-group-numbered > .list-group-item::before {
+    display: none !important;
+}
+
+.list-group-numbered {
+    padding-right: 0;
+}
+
+/* Ensure the centered text stays perfectly in the middle after removing numbers */
+.list-group-item {
+    padding-left: 15px; 
+    padding-right: 15px;
+}
+
+/* ONE IMAGE PER SCREEN */
+.quran-page {
+  width: 100%;
+  height: calc(100vh - 100px); /* full screen minus header */
+  object-fit: contain;
+  display: block;
+  margin: 0;
+  padding: 0;
+  scroll-snap-align: start;
+}
+
+/* PAGE-BY-PAGE SCROLLING */
+html, body {
+  scroll-snap-type: none;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+/* Horizontal scroll container */
+.horizontal-scroll {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  height: calc(100vh - 100px);
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  direction: ltr !important; /* FIX: prevents reversed order */
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Each Quran page */
+.quran-page {
+  flex: 0 0 100vw;
+  height: calc(100vh - 100px);
+  object-fit: contain;
+  scroll-snap-align: center;
+  background-color: black;
+  direction: ltr !important; /* FIX: ensures correct alignment */
+}
