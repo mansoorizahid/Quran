@@ -80,37 +80,26 @@ canvas {
     padding-right: 15px;
 }
 
-/* ONE IMAGE PER SCREEN */
-.quran-page {
-    width: 100%;
-    height: calc(100vh - 100px);
-    object-fit: contain;
-    display: block;
-    margin: 0;
-    padding: 0;
-    scroll-snap-align: start;
-}
-
 /* PAGE-BY-PAGE SCROLLING */
 html,
 body {
-    scroll-snap-type: none;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    scroll-snap-type: none;
 }
 
 /* Horizontal scroll container */
 .horizontal-scroll {
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     overflow-x: scroll;
     overflow-y: hidden;
     height: calc(100vh - 100px);
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     scrollbar-width: none;
-    direction: rtl !important;
+    -webkit-overflow-scrolling: touch;
 }
 
 .horizontal-scroll::-webkit-scrollbar {
@@ -120,8 +109,12 @@ body {
 /* Each Quran page */
 .quran-page {
     flex: 0 0 100vw;
+    width: 100vw;
     height: calc(100vh - 100px);
     object-fit: contain;
+    display: block;
+    margin: 0;
+    padding: 0;
     scroll-snap-align: center;
     background-color: black;
 }
