@@ -31,69 +31,53 @@
         'وَمَا لِيَ','فَمَنْ أَظْلَمُ','إِلَيْهِ يُرَدُّ','حم','قَالَ فَمَا خَطْبُكُمْ','قَدْ سَمِعَ اللَّهُ',
         'تَبَارَكَ الَّذِي','عَمَّ'
       ];
-
       const juzId = sessionStorage.getItem('selectedJuz') || 1;
       const folder = "juz" + String(juzId).padStart(2, '0');
-
       document.getElementById('juz-title').textContent =
         `جزء ${juzId} - ${arabicNames[juzId - 1]}`;
-
       const res = await fetch('quran_pages.json', { cache: "force-cache" });
       const data = await res.json();
-
-      /* Reverse pages so reading direction is RTL */
       const pages = data[folder];
-
       const container = document.getElementById('image-container');
-
       const firstFile = pages[0].file;
       const firstPath = `juz_images/${folder}/${firstFile}`;
-
       document.getElementById("preloadImage").href = firstPath;
-
       const firstImage = document.createElement('img');
       firstImage.src = firstPath;
       firstImage.className = "quran-page";
       firstImage.fetchPriority = "high";
       firstImage.decoding = "async";
       firstImage.alt = "";
-
       container.appendChild(firstImage);
-
       const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             const img = entry.target;
-
             if (!img.src) {
               img.src = img.dataset.src;
             }
-
             observer.unobserve(img);
           }
         });
       }, {
         rootMargin: "300px"
       });
-
       for (let i = 1; i < pages.length; i++) {
         const img = document.createElement('img');
-
         img.dataset.src = `juz_images/${folder}/${pages[i].file}`;
         img.className = "quran-page";
         img.loading = "lazy";
         img.decoding = "async";
         img.alt = "";
-
         container.appendChild(img);
         observer.observe(img);
       }
-
       requestAnimationFrame(() => {
-        container.scrollLeft = 0;
+        setTimeout(() => {
+          container.scrollLeft = container.scrollWidth - container.clientWidth;
+        }, 50);
       });
     }
-
     window.addEventListener('load', loadPages);
   </script>
 
