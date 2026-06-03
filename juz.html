@@ -37,7 +37,7 @@
         `جزء ${juzId} - ${arabicNames[juzId - 1]}`;
       const res = await fetch('quran_pages.json', { cache: "force-cache" });
       const data = await res.json();
-      const pages = data[folder].slice().reverse();
+      const pages = data[folder];
       const container = document.getElementById('image-container');
       const firstFile = pages[0].file;
       const firstPath = `juz_images/${folder}/${firstFile}`;
@@ -73,9 +73,7 @@
         observer.observe(img);
       }
       requestAnimationFrame(() => {
-        setTimeout(() => {
-          container.scrollLeft = container.scrollWidth - container.clientWidth;
-        }, 50);
+        container.scrollLeft = 0;
       });
     }
     window.addEventListener('load', loadPages);
