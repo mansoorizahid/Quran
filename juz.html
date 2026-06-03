@@ -20,9 +20,7 @@
   </header>
 
   <!-- Horizontal scroll container -->
-  <div id="image-container" class="horizontal-scroll">
-      <img id="firstImage" class="quran-page" fetchpriority="high" decoding="async" alt="">
-  </div>
+  <div id="image-container" class="horizontal-scroll"></div>
 
   <script>
     async function loadPages() {
@@ -42,40 +40,61 @@
 
       const res = await fetch('quran_pages.json', { cache: "force-cache" });
       const data = await res.json();
-      const pages = data[folder];
+
+      /* Reverse pages so reading direction is RTL */
+      const pages = [...data[folder]].reverse();
+
+      const container = document.getElementById('image-container');
 
       const firstFile = pages[0].file;
       const firstPath = `juz_images/${folder}/${firstFile}`;
 
       document.getElementById("preloadImage").href = firstPath;
-      document.getElementById("firstImage").src = firstPath;
 
-      const container = document.getElementById('image-container');
+      const firstImage = document.createElement('img');
+      firstImage.src = firstPath;
+      firstImage.className = "quran-page";
+      firstImage.fetchPriority = "high";
+      firstImage.decoding = "async";
+      firstImage.alt = "";
 
-      // TRUE LAZY LOADING
+      container.appendChild(firstImage);
+
       const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             const img = entry.target;
-            img.src = img.dataset.src;
+
+            if (!img.src) {
+              img.src = img.dataset.src;
+            }
+
             observer.unobserve(img);
           }
         });
-      }, { rootMargin: "300px" });
+      }, {
+        rootMargin: "300px"
+      });
 
       for (let i = 1; i < pages.length; i++) {
         const img = document.createElement('img');
+
         img.dataset.src = `juz_images/${folder}/${pages[i].file}`;
         img.className = "quran-page";
-        img.decoding = "async";
         img.loading = "lazy";
+        img.decoding = "async";
+        img.alt = "";
 
         container.appendChild(img);
         observer.observe(img);
       }
+
+      requestAnimationFrame(() => {
+        container.scrollLeft = 0;
+      });
     }
 
-    window.onload = loadPages;
+    window.addEventListener('load', loadPages);
   </script>
 
 </body>
