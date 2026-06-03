@@ -92,7 +92,7 @@ body {
 /* Horizontal scroll container */
 .horizontal-scroll {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     overflow-x: scroll;
     overflow-y: hidden;
     height: calc(100vh - 100px);
