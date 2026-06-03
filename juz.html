@@ -42,7 +42,7 @@
       const data = await res.json();
 
       /* Reverse pages so reading direction is RTL */
-      const pages = [...data[folder]].reverse();
+      const pages = data[folder];
 
       const container = document.getElementById('image-container');
 
